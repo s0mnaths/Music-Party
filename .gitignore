@@ -11,6 +11,11 @@ venv/
 # Database
 db.sqlite3
 
+# node modules
+node_modules/
+
+#package.json
+package-lock.json
 
 # Visual Studio
 .vscode/
