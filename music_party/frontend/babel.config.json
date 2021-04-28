@@ -1,14 +1,14 @@
 {
     "presets": [
-        [
-            "@babel/presemt-env",
-            {
-                "targets": {
-                    "node": "10"
-                }
-            }
-        ],
-        "@babel/preset-react"
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "10"
+          }
+        }
+      ],
+      "@babel/preset-react"
     ],
-    "plugins": ["@babel/preset-plugin-proposal-class-properties"]
-}
+    "plugins": ["@babel/plugin-proposal-class-properties"]
+  }
