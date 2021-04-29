@@ -17,12 +17,8 @@ class RoomView(generics.ListAPIView):
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
-    def get(self, request, *args, **kwargs):
-        serializer = self.serializer_class(Room.objects.all())
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
-        self.http_method_names.append("GET")
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
