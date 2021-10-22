@@ -7,6 +7,7 @@ __pycache__
 .env
 myvenv/
 venv/
+env/
 
 # Database
 db.sqlite3
@@ -21,3 +22,5 @@ package-lock.json
 .vscode/
 .history/
 *.code-workspace
+
+
