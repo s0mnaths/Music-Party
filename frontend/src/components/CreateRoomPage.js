@@ -11,13 +11,19 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 export default class CreateRoomPage extends Component {
-  defaultVotes = 2;
+  static defaultProps = {
+    votesToSkip: 2,
+    guestCanPause: true,
+    update: false,
+    roomCode: null,
+    updateCallback: () => {},
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      guestCanPause: true,
-      votesToSkip: this.defaultVotes,
+      guestCanPause: this.props.guestCanPause,
+      votesToSkip: this.props.votesToSkip,
     };
 
     this.handleRoomButtonPressed = this.handleRoomButtonPressed.bind(this);
@@ -52,11 +58,13 @@ export default class CreateRoomPage extends Component {
   }
 
   render() {
+    const title = this.props.update ? "Update Room" : "Create a Room"
+
     return (
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
           <Typography component="h4" variant="h4">
-            Create A Room
+            {title}
           </Typography>
         </Grid>
         <Grid item xs={12} align="center">
@@ -90,7 +98,7 @@ export default class CreateRoomPage extends Component {
               required={true}
               type="number"
               onChange={this.handleVotesChange}
-              defaultValue={this.defaultVotes}
+              defaultValue={this.state.votesToSkip}
               inputProps={{
                 min: 1,
                 style: { textAlign: "center" },
