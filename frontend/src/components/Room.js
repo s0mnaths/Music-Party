@@ -17,16 +17,17 @@ export default class Room extends Component {
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettingsButton = this.renderSettingsButton.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
+    this.getRoomDetails = this.getRoomDetails.bind(this);
   }
 
   getRoomDetails() {
-    fetch("/api/get-room" + "?code=" + this.roomCode)
+    return fetch("/api/get-room" + "?code=" + this.roomCode)
       .then((response) => {
         if (!response.ok) {
           this.props.leaveRoomCallback();
           this.props.history.push("/");
         }
-        return response.json()
+        return response.json();
       })
       .then((data) => {
         this.setState({
@@ -40,7 +41,7 @@ export default class Room extends Component {
   leaveButtonPressed() {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     };
     fetch("/api/leave-room", requestOptions).then((_response) => {
       this.props.leaveRoomCallback();
@@ -58,14 +59,20 @@ export default class Room extends Component {
     return (
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <CreateRoomPage update={true} 
-            votesToSkip={this.state.votesToSkip} 
-            guestCanPause={this.state.guestCanPause} 
-            roomCode={this.state.roomCode} 
-            updateCallback={ () => {} }/>
+          <CreateRoomPage
+            update={true}
+            votesToSkip={this.state.votesToSkip}
+            guestCanPause={this.state.guestCanPause}
+            roomCode={this.roomCode}
+            updateCallback={this.getRoomDetails}
+          />
         </Grid>
         <Grid item xs={12} align="center">
-          <Button variant="contained" color="secondary" onClick={ () => this.updateShowSettings(false) }>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => this.updateShowSettings(false)}
+          >
             Close
           </Button>
         </Grid>
@@ -73,15 +80,18 @@ export default class Room extends Component {
     );
   }
 
-
   renderSettingsButton() {
     return (
       <Grid item xs={12} align="center">
-        <Button variant="contained" color="primary" onClick={ () => this.updateShowSettings(true) }>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.updateShowSettings(true)}
+        >
           Settings
         </Button>
       </Grid>
-    )
+    );
   }
 
   render() {
@@ -112,7 +122,11 @@ export default class Room extends Component {
         </Grid>
         {this.state.isHost ? this.renderSettingsButton() : null}
         <Grid item xs={12} align="center">
-          <Button variant="contained" color="secondary" onClick={ this.leaveButtonPressed }>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.leaveButtonPressed}
+          >
             Leave Room
           </Button>
         </Grid>
