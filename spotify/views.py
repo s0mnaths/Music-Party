@@ -1,11 +1,12 @@
-from django.http import response
-from django.shortcuts import redirect, render
-from .credentials import REDIRECT_URI, CLIENT_ID, CLIENT_SECRET
+from django.shortcuts import render, redirect
+from .credentials import REDIRECT_URI, CLIENT_SECRET, CLIENT_ID
 from rest_framework.views import APIView
 from requests import Request, post
 from rest_framework import status
 from rest_framework.response import Response
-from .util import update_or_create_user_tokens
+from .util import update_or_create_user_tokens, is_spotify_authenticated
+from api.models import Room
+
 
 class AuthURL(APIView):
     def get(self, request, format=None):
@@ -43,4 +44,10 @@ def spotify_callback(request, format=None):
 
     update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
-    redirect('frontend:')
+    return redirect('frontend:')
+
+
+class IsAuthenticated(APIView):
+    def get(self, request, format=None):
+        is_authenticated = is_spotify_authenticated(self.request.session.session_key)
+        return Response({'status': is_authenticated}, status=status.HTTP_200_OK)
