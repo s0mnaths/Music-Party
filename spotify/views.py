@@ -42,9 +42,17 @@ def spotify_callback(request, format=None):
     if not request.session.exists(request.session.session_key):
         request.session.create()
 
-    update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
+    update_or_create_user_tokens(
+        request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
     return redirect('frontend:')
+
+
+class IsAuthenticated(APIView):
+    def get(self, request, format=None):
+        is_authenticated = is_spotify_authenticated(
+            self.request.session.session_key)
+        return Response({'status': is_authenticated}, status=status.HTTP_200_OK)
 
 
 class CurrentSong(APIView):
@@ -89,3 +97,24 @@ class CurrentSong(APIView):
         }
 
         return Response(song, status=status.HTTP_200_OK)
+
+class PauseSong(APIView):
+    def put(self, response, format=None):
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)[0]
+        if self.request.session.session_key == room.host or room.guest_can_pause:
+            pause_song(room.host)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+        
+        return Response({}, status=status.HTTP_403_FORBIDDEN)
+    
+class PlaySong(APIView):
+    def put(self, response, format=None):
+        room_code = self.request.session.get('room_code')
+        room = Room.objects.filter(code=room_code)[0]
+        if self.request.session.session_key == room.host or room.guest_can_pause:
+            play_song(room.host)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+        
+        return Response({}, status=status.HTTP_403_FORBIDDEN)
+        
