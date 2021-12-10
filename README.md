@@ -9,14 +9,6 @@ Easily collaborate in playing songs at a party!
 3. Play songs and let others vote to play/pause & skip!
 
 
-## Demo
-#### Create a Room
-![create](demo/create-demo.gif)
-
-#### Join a Room
-![join](demo/join-demo.gif)
-
-
 ## Run locally
 
 #### Spotify API access
@@ -44,6 +36,14 @@ Easily collaborate in playing songs at a party!
     $ npm run dev
 
 Now the app is live at `http://localhost:8000/`
+
+
+## Demo
+#### Create a Room
+![create](demo/create-demo.gif)
+
+#### Join a Room
+![join](demo/join-demo.gif)
 
 ### Enjoy! 🎊
 
