@@ -5,8 +5,10 @@ Easily collaborate in playing songs at a party!
 
 ## How?
 1. Create a room & set the permissions.
-2. Share the room code.
+2. Share the room code & let others join.
 3. Play songs and let others vote to play/pause & skip!
+
+
 
 
 ## Run locally
