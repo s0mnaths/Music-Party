@@ -17,7 +17,7 @@ Easily collaborate in playing songs at a party!
 ![spotify](https://img.shields.io/badge/Spotify-1ED760?&style=for-the-badge&logo=spotify&logoColor=white)
 
 1. Create a developer profile, and a new app on Spotify by going to [Spotify Developer Dashbboard](https://developer.spotify.com/dashboard/applications). 
-2. In the app settings, set Redirect URI as `http://localhost:8000/`.
+2. In the app settings, set Redirect URI as `http://localhost:8000/spotify/redirect/`.
 3. Copy the `CLIENT_ID` & `CLIENT_SECRET`, & paste it in the file `/path/to/repo/spotify/credentials.py`  file.
 
 
